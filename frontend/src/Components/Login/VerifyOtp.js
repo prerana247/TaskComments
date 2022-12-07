@@ -10,13 +10,13 @@ function VerifyOtp() {
   const [Users, setUsers] = useState([]);
   const [otp, setOtp] = useState("");
     
-  //  const location = useLocation()
-  //  const userId = location.state.Id
+   const location = useLocation()
+   const userId = location.state.Id
 
   useEffect(() => {
     // console.log(location.state.Id)
     // console.log(userId)
-        axios.get(Config.api + `Users/OTP/${sessionStorage.getItem("user")}`) 
+        axios.get(Config.api + `Users/OTP/${userId}`) 
             .then(res => setUsers(res.data))
       .catch(error => console.log(error))
     console.log(Users)
@@ -54,6 +54,7 @@ function VerifyOtp() {
         <div className='login-body'>
         <h3 className='login-head'>
         <img src={cglogo} className="cg-logo mb-4" alt="Cg-Logo" />iTransform Learning</h3>
+        <h3>{userId}</h3>
         {/* {Users.map((u) => (
         <div class="alert alert-warning" role="alert" key={u.UserId}>
             We have sent a mail to{u.CorpMail} !!

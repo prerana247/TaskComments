@@ -52,7 +52,7 @@ namespace Backend.Controllers
         #endregion
 
         #region Login Method API for New Users
-        [HttpGet("/NewUser")]
+        [HttpGet("/api/NewUser")]
         public async Task<ActionResult<User>> FirstTimeUserLogin(string Mail1, string Mail2)
         {
             try

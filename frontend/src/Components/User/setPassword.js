@@ -58,7 +58,7 @@ function SetPassword() {
              Gender : res.gender,
              MobileNumber : res.mobileNumber,
              DOB : res.dob,
-             DOJ : res.dob,
+             DOJ : res.doj,
              Grade : res.grade,
              Location : res.location,
              Role : res.role,
@@ -82,12 +82,30 @@ function SetPassword() {
     const updatePassword = (e) => {
         if(state.newPassword == state.confirmPassword)
         {
+            let userWithPassword = {
+             UserId : user.UserId,   
+             FirstName : user.FirstName,
+             LastName : user.LastName,
+             PersonalMail : user.PersonalMail,
+             CorpMail : user.CorpMail,
+             Gender : user.Gender,
+             MobileNumber : user.MobileNumber,
+             DOB : user.DOB,
+             DOJ : user.DOJ,
+             Grade : user.Grade,
+             Location : user.Location,
+             Role : user.Role,
+             Password : state.newPassword,
+             OTP : user.OTP,
+             IsVerified : user.IsVerified
+            }
             setUser({Password : state.newPassword})
-        axios.put(Config.api + `Users/${user.UserId}`, user)
-        .then(res=> alert('Password changed Successfully '+ res))
-        .catch(error => alert("Oops! Something went wrong." + error))
-        sessionStorage.clear()
-        window.location.reload()
+            console.log(user.Password)
+            axios.put(Config.api + `Users/${user.UserId}`, userWithPassword)
+            .then(res=> alert('Password changed Successfully '+ res))
+            .catch(error => alert("Oops! Something went wrong." + error))
+            sessionStorage.clear()
+            window.location.reload()
     }
     else {
         e.preventDefault();

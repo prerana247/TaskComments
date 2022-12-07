@@ -40,7 +40,7 @@ namespace Backend.Controllers
         #endregion
 
         #region Send OTP for Verifying First-Time Users
-        [HttpPost, Route("VerifyUser")]
+        [HttpPost, Route("/VerifyUser")]
         public async Task<IActionResult> SendOTP(int id)
         {
             string Subject = "OTP for Email Verification";
@@ -73,11 +73,10 @@ namespace Backend.Controllers
             string OTPLength = "6";
             string NewPassword = "";
 
-            string allowedChars = "";
-            allowedChars = "1,2,3,4,5,6,7,8,9";
+            string AllowedChars = "1,2,3,4,5,6,7,8,9";
 
             char[] sep = { ',' };
-            string[] arr = allowedChars.Split(sep);
+            string[] arr = AllowedChars.Split(sep);
             string IDString = "";
             string temp = "";
             Random rand = new Random();

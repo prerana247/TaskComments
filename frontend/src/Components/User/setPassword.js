@@ -11,6 +11,11 @@ function SetPassword() {
     const [confirmPasswordShown, setconfirmPasswordShown] = useState(false);
     const[newEye, setnewEye] = useState(false);
     const[confirmEye, setconfirmEye] = useState(false);
+    const[error,setError] = useState("");
+    const [state, setState] = useState({
+        newPassword: "",
+        confirmPassword: ""
+      });
 
     const togglePasswordnew = () => {
         setnewPasswordShown(!newPasswordShown);
@@ -22,6 +27,7 @@ function SetPassword() {
     };
 
     const[user,setUser] = useState({
+            UserId : "",
             FirstName : "",
             LastName : "",
             PersonalMail : "",
@@ -41,59 +47,75 @@ function SetPassword() {
 
     useEffect( () => {
         axios.get(Config.api + 'Users/1') 
-        // .then(response => response.data)
-        // .then(res => setUser(
-        //     {
-        //     FirstName : res.data.firstName
-        //     // LastName : r,
-        //     // PersonalMail : "",
-        //     // CorpMail : "",
-        //     // Gender : "",
-        //     // MobileNumber : "",
-        //     // DOB : "",
-        //     // DOJ : "",
-        //     // Grade : "",
-        //     // Location : "",
-        //     // Role : "",
-        //     // Password : "",
-        //     // OTP : 0,
-        //     // IsVerified : true
-        // }
-        // ))
-        .then(res => console.log(res.data.firstName,user.FirstName))
+        .then(response => response.data)
+        .then(res => setUser(
+            {
+             UserId : res.userId,   
+             FirstName : res.firstName,
+             LastName : res.lastName,
+             PersonalMail : res.personalMail,
+             CorpMail : res.corpMail,
+             Gender : res.gender,
+             MobileNumber : res.mobileNumber,
+             DOB : res.dob,
+             DOJ : res.dob,
+             Grade : res.grade,
+             Location : res.location,
+             Role : res.role,
+             Password : res.password,
+             OTP : res.otp,
+             IsVerified : res.isVerified
+        }
+        ))
+        .then(console.log(user.FirstName))
         .catch(error => console.log(error))
     } , []) 
 
-    const updatePassword = () => {
-        axios.put(Config.api + `Users/1`, user)
-        .then(response => response.data)
-        .then(alert('Password changed Successfully '))
-        .catch(error => alert("Oops! Something went wrong."))
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setState((prevState) => ({
+          ...prevState,
+          [id]: value,
+        }));
+      };
+
+    const updatePassword = (e) => {
+        if(state.newPassword == state.confirmPassword)
+        {
+            setUser({Password : state.newPassword})
+        axios.put(Config.api + `Users/${user.UserId}`, user)
+        .then(res=> alert('Password changed Successfully '+ res))
+        .catch(error => alert("Oops! Something went wrong." + error))
         sessionStorage.clear()
         window.location.reload()
+    }
+    else {
+        e.preventDefault();
+        setError("Passwords do not match!")
+    }
     }
   return (
     <div className="card pass-card mx-auto">
     <form className='login-form'>
         <div className='login-body'>
         <h3 className='login-head'>Set Password</h3>
-
+        <p className="pass-error">{error}</p>
         <div className="mb-3">
             <label className="form-label login-label">New Password</label>
             <div className='d-flex flex-row'>
-            <input type={newPasswordShown ? "text" : "password"} className="form-control" placeholder="Enter password" />
+            <input type={newPasswordShown ? "text" : "password"} id="newPassword" className="form-control" onChange={handleChange} placeholder="Enter password" />
             <img className="eye" src={newEye ? view : hide} alt="hide" onClick={togglePasswordnew}></img>
             </div>
         </div>
         <div className="mb-3">
             <label className="form-label login-label">Confirm Password</label>
             <div className='d-flex flex-row'>
-            <input type={confirmPasswordShown ? "text" : "password"} className="form-control" placeholder="Enter password" />
+            <input type={confirmPasswordShown ? "text" : "password"} id="confirmPassword" onChange={handleChange} className="form-control" placeholder="Enter password" />
             <img className="eye" src={confirmEye ? view : hide} alt="hide" onClick={togglePasswordconfirm}></img>
             </div>
         </div>
         <center>
-            <button type="submit" className="login-btn mt-3"> Set</button>
+            <button type="submit" className="login-btn mt-3" onClick={updatePassword}> Set</button>
         <br/>
         </center>
         </div>

@@ -57,7 +57,7 @@ namespace Backend.Controllers
         {
             try
             {
-                UserLogin user = new UserLogin()
+                NewUserLogin user = new NewUserLogin()
                 {
                     PersonalMail = Mail1,
                     CorpMail = Mail2
@@ -65,7 +65,6 @@ namespace Backend.Controllers
                 var NewUser = NewAuthenticate(user);
                 if (NewUser != null)
                 {
-                   // var vOTP = VerifyOTP(user);
                     return NewUser;
                 }
                 else
@@ -117,7 +116,7 @@ namespace Backend.Controllers
 
         #region NewAuthenticate Method
         ///<summary>Authenticate method</summary> 
-        private User NewAuthenticate(UserLogin userLogin)
+        private User NewAuthenticate(NewUserLogin userLogin)
         {
             var Currentuser = _context.User.FirstOrDefault(o => o.CorpMail == userLogin.CorpMail && o.PersonalMail == userLogin.PersonalMail);
 
@@ -129,25 +128,25 @@ namespace Backend.Controllers
         }
         #endregion
 
-        #region VerifyOTP Method
-        ///<summary>VerifyOTP method</summary> 
-        private User VerifyOTP(UserLogin userLogin)
-        {
+        // #region VerifyOTP Method
+        // ///<summary>VerifyOTP method</summary> 
+        // private User VerifyOTP(UserLogin userLogin)
+        // {
 
-            var Currentuser = _context.User.FirstOrDefault(o => o.CorpMail == userLogin.CorpMail && o.OTP == userLogin.OTP);
-            //User newUser = new User();
+        //     var Currentuser = _context.User.FirstOrDefault(o => o.CorpMail == userLogin.CorpMail && o.OTP == userLogin.OTP);
+        //     //User newUser = new User();
 
-            //var v = true;
+        //     //var v = true;
 
-            if (Currentuser != null)
-            {
-                //newUser.isVerified = v;
-                //_DbContext.SaveChanges();
-                return Currentuser;
-            }
-            return null;
-        }
-        #endregion
+        //     if (Currentuser != null)
+        //     {
+        //         //newUser.isVerified = v;
+        //         //_DbContext.SaveChanges();
+        //         return Currentuser;
+        //     }
+        //     return null;
+        // }
+        // #endregion
 
     }
 }

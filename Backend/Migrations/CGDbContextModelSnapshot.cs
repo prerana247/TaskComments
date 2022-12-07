@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Backend.Migrations
+namespace backend.Migrations
 {
     [DbContext(typeof(CGDbContext))]
     partial class CGDbContextModelSnapshot : ModelSnapshot

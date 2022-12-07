@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System;
-using static Backend.Models.RoleMaster;
+
 
 namespace Backend.Models
 {
@@ -52,7 +52,7 @@ namespace Backend.Models
 
         [Required]
         [Column(TypeName = "nvarchar(24)")]
-        public Roles Role { get; set; }
+        public string Role { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

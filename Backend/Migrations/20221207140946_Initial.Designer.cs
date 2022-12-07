@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Backend.Migrations
+namespace backend.Migrations
 {
     [DbContext(typeof(CGDbContext))]
-    [Migration("20221204164015_Initial-Migration")]
-    partial class InitialMigration
+    [Migration("20221207140946_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

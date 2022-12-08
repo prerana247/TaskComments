@@ -12,10 +12,11 @@ function SetPassword() {
     const[newEye, setnewEye] = useState(false);
     const[confirmEye, setconfirmEye] = useState(false);
     const[error,setError] = useState("");
+
     const [state, setState] = useState({
         newPassword: "",
         confirmPassword: ""
-      });
+    });
 
     const togglePasswordnew = () => {
         setnewPasswordShown(!newPasswordShown);

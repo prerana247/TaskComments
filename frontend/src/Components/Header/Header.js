@@ -1,9 +1,18 @@
 import React from 'react'
 // import cglogo from '../../images/cg-logo.png'
+import Config from '../Settings/Config'
 import './Header.css'
 function Header() {
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.reload();
+    window.location.href='/';
+  }
+
   return (
     <>
+    {/* {Config.isUserLoggedin ?  */}
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
     <div className="container">
       <a className="navbar-brand" href="#">iEval</a>
@@ -28,11 +37,12 @@ function Header() {
           
         </ul>
             <div>
-              <button className="btn btn-outline-light logout">Logout</button>
+              <button className="btn btn-outline-light logout" onClick={logout}>Logout</button>
             </div>
       </div>
     </div>
   </nav>
+  {/* : <></> } */}
   </>
     
   )

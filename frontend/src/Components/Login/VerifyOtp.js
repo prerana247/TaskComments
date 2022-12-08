@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import './Verifyuser.css'
 import cglogo from '../../images/cg-logo.png'
-import Config from '../../Settings/config'
+import Config from '../Settings/Config'
 import {useLocation} from 'react-router-dom'
 
 function VerifyOtp() {

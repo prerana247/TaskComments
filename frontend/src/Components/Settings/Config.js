@@ -3,6 +3,7 @@ const Config={
     token : sessionStorage.getItem('token'),
     email : sessionStorage.email,
     Role: sessionStorage.getItem('role'),
+    Id: sessionStorage.getItem('userId'),
     isUserLoggedin : sessionStorage.getItem('token') != null ? true : false
 
 }

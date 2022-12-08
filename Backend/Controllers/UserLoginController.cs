@@ -39,7 +39,7 @@ namespace Backend.Controllers
                 if (user != null)
                 {
                     var Token = Generate(user);
-                    var role = new { token = Token, Role = user.Role };
+                    var role = new { token = Token, Role = user.Role , UserId = user.UserId};
                     return Ok(role);
                 }
                 return NotFound("User Not found");

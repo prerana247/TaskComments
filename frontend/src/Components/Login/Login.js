@@ -4,7 +4,7 @@ import './Login.css'
 import cglogo from '../../images/cg-logo.png'
 import view from "../../images/view.png"
 import hide from "../../images/hide.png"
-import Config from "../../Settings/config"
+import Config from "../Settings/Config"
 
 
 function Login() {
@@ -36,8 +36,9 @@ function Login() {
 
         axios.post(Config.api + "UserLogin", payload)
         .then((res) => {sessionStorage.setItem('token', res.data.token)
-        sessionStorage.setItem('role',res.data.Role)
+        sessionStorage.setItem('role',res.data.role)
         sessionStorage.setItem('email',payload.CorpMail)
+        sessionStorage.setItem('Id',res.data.userId)
               window.location.reload()
               window.location.href = '/dashboard'
             

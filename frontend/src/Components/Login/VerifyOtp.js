@@ -3,50 +3,95 @@ import axios from 'axios'
 import './Verifyuser.css'
 import cglogo from '../../images/cg-logo.png'
 import Config from '../Settings/Config'
-import {useLocation} from 'react-router-dom'
+import {useNavigate ,useLocation} from 'react-router-dom'
 
 function VerifyOtp() {
-  
-  const [Users, setUsers] = useState([]);
-  const [otp, setOtp] = useState("");
-    
-   const location = useLocation()
-   const userId = location.state.Id
+  const[user,setUser] = useState({
+    UserId : "",
+    FirstName : "",
+    LastName : "",
+    PersonalMail : "",
+    CorpMail : "",
+    Gender : "",
+    MobileNumber : "",
+    DOB : "",
+    DOJ : "",
+    Grade : "",
+    Location : "",
+    Role : "",
+    Password : "",
+    OTP : 0,
+    IsVerified : false
+});
+const [inputOTP, setInputOTP] = useState(0);
 
-  useEffect(() => {
-    // console.log(location.state.Id)
-    // console.log(userId)
-        axios.get(Config.api + `Users/OTP/${userId}`) 
-            .then(res => setUsers(res.data))
-      .catch(error => console.log(error))
-    console.log(Users)
-    }, [])
+  const location = useLocation();
+  const userid = location.state.Id;
 
-  const handleChange = (e) => {
-    // const { id, value } = e.target;
-    // setOtp((prevState) => ({
-    //   ...prevState,
-    //   [id]: value,
-    // }));
-    setOtp(e.target.value);
-  };
+  useEffect(()=>{
+    axios.get(Config.api + `Users/${userid}`)
+    .then(res=>{setUser(
+      {
+       UserId : res.data.userId,   
+       FirstName : res.data.firstName,
+       LastName : res.data.lastName,
+       PersonalMail : res.data.personalMail,
+       CorpMail : res.data.corpMail,
+       Gender : res.data.gender,
+       MobileNumber : res.data.mobileNumber,
+       DOB : res.data.dob,
+       DOJ : res.data.doj,
+       Grade : res.data.grade,
+       Location : res.data.location,
+       Role : res.data.role,
+       Password : res.data.password,
+       OTP : res.data.otp,
+       IsVerified : res.data.isVerified
+      }
+    )
+  })
+    .catch(err => console.log(err))
+     },[])
+
+     const navigate = useNavigate();
+     const getVerifiedId = (id) => {
+      navigate('/setPassword',{state:{Id:id}});
+  }
 
   const handleSubmitClick = (e) => {
     e.preventDefault();
-    console.log(otp)
-    console.log(Users.otp)
-    if (otp == Users.otp) {
-       window.location.reload()
-       window.location.href = '/setPassword'
-    } else {
-      alert("otp is not valid !!");
+    if(inputOTP == user.OTP){
+      let verifiedUser = {
+        UserId : user.UserId,   
+        FirstName : user.FirstName,
+        LastName : user.LastName,
+        PersonalMail : user.PersonalMail,
+        CorpMail : user.CorpMail,
+        Gender : user.Gender,
+        MobileNumber : user.MobileNumber,
+        DOB : user.DOB,
+        DOJ : user.DOJ,
+        Grade : user.Grade,
+        Location : user.Location,
+        Role : user.Role,
+        Password : user.Password,
+        OTP : 0,
+        IsVerified : true
+       }
+      axios.put(Config.api + `Users/${userid}`, verifiedUser)
+      .then(res=> {alert(" You are successfully verified!");
+      getVerifiedId(user.UserId);
+        window.location.href = '/setPassword';
+      })
+      .catch(err=> console.log("Error : " + err));
+    }else {
+      alert("OTP is incorrect!")
     }
-    // const payload = {
-    //   OTP: state.OTP,
-    //   CorpMail: state.CorpMail, 
-    //   };
-      
-}
+  }
+
+  const handleChange = (e) => {
+    setInputOTP(e.target.value);
+  }
 
   return (
     <div className="card Verifyuser-card mx-auto">
@@ -54,17 +99,11 @@ function VerifyOtp() {
         <div className='login-body'>
         <h3 className='login-head'>
         <img src={cglogo} className="cg-logo mb-4" alt="Cg-Logo" />iTransform Learning</h3>
-        <h3>{userId}</h3>
-        {/* {Users.map((u) => (
-        <div class="alert alert-warning" role="alert" key={u.UserId}>
-            We have sent a mail to{u.CorpMail} !!
-        </div>  
-        ))} */}
           <div class="alert alert-warning" role="alert" >
-            We have sent a mail to !!
-        </div> 
+            We have sent a mail to {user.CorpMail}!!
+        </div>
         <div class="form-floating">
-          <input type="number" className="form-control" id="OTP" name="OTP" placeholder="OTP"onChange={handleChange}/>
+          <input type="number" className="form-control" id="OTP" name="OTP" placeholder="OTP" onChange={handleChange}/>
           <label >OTP</label>
         </div>
         <center>

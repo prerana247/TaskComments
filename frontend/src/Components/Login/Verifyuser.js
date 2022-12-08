@@ -6,24 +6,6 @@ import Config from '../Settings/Config'
 import {useNavigate} from 'react-router-dom';
 
 function Verifyuser() {
-  const[user,setUser] = useState({
-    UserId : "",
-    FirstName : "",
-    LastName : "",
-    PersonalMail : "",
-    CorpMail : "",
-    Gender : "",
-    MobileNumber : "",
-    DOB : "",
-    DOJ : "",
-    Grade : "",
-    Location : "",
-    Role : "",
-    Password : "",
-    OTP : 0,
-    IsVerified : true
-  });
-
   const navigate = useNavigate();
   const [state, setState] = useState({
     PersonalMail: "",
@@ -42,10 +24,10 @@ function Verifyuser() {
     }));
   };
 
-  function sendotp() {
-    axios.post(Config.api + `EmailSender/SendOTP/?id=${user.UserId}`)
-      .then(res => { alert("Email sent !!") })
-    .catch(err => alert("nhi hua sent"))
+  function sendotp(id) {
+    axios.post(Config.api + `VerifyUser?id=${id}`)
+      .then(res => { alert("Email sent successfully!"); window.location.reload();})
+    .catch(err => alert("Oops! Something went wrong"))
   }
 
   const handleSubmitClick = (e) => {
@@ -56,28 +38,9 @@ function Verifyuser() {
     };
 
     axios.get(Config.api + `NewUser?Mail1=${payload.PersonalMail}&Mail2=${payload.CorpMail}`)
-        .then(res => setUser(
-        {
-          UserId : res.userId,   
-          FirstName : res.firstName,
-          LastName : res.lastName,
-          PersonalMail : res.personalMail,
-          CorpMail : res.corpMail,
-          Gender : res.gender,
-          MobileNumber : res.mobileNumber,
-          DOB : res.dob,
-          DOJ : res.doj,
-          Grade : res.grade,
-          Location : res.location,
-          Role : res.role,
-          Password : res.password,
-          OTP : res.otp,
-          IsVerified : res.isVerified
-        }
-      ))
-      .then(getVerifiedId(user.UserId))
-      .then(sendotp())
-      .then(console.log(user.UserId))
+        .then(res => { 
+           getVerifiedId(res.data.userId)
+           sendotp(res.data.userId)})
       .catch(err => alert("Oops! Something went wrong."))
 }
 
@@ -87,7 +50,6 @@ function Verifyuser() {
         <div className='login-body'>
         <h3 className='login-head'>
         <img src={cglogo} className="cg-logo mb-4" alt="Cg-Logo"/>iTransform Learning</h3>
-        <h3>{user.userId}</h3>
         <div className="mb-3">
             <label className="form-label login-label">Email Id</label>
             <input type="email" id="PersonalMail" className="form-control" onChange={handleChange} placeholder='Enter personal email address'/>

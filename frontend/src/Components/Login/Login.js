@@ -40,12 +40,12 @@ function Login() {
         sessionStorage.setItem('email',payload.CorpMail)
         sessionStorage.setItem('Id',res.data.userId)
               window.location.reload()
-              window.location.href = '/dashboard'
+              window.location.href = "/dashboard";
             
             })
     
         .catch((err)=> {console.log(err)
-        alert('Invalid credentials')
+        alert('Invalid credentials!')
         setState({ CorpMail: '', Password: '' })
            })  
       };

@@ -4,6 +4,7 @@ import hide from "../../images/hide.png"
 import "./Password.css"
 import Config from "../Settings/Config"
 import axios from 'axios';
+import {useNavigate ,useLocation} from 'react-router-dom'
 
 function SetPassword() {
 
@@ -45,9 +46,11 @@ function SetPassword() {
             IsVerified : true
     });
 
+    const location = useLocation();
+    const userid = location.state.Id
 
     useEffect( () => {
-        axios.get(Config.api + 'Users/1') 
+        axios.get(Config.api + `Users/${userid}`) 
         .then(response => response.data)
         .then(res => setUser(
             {
@@ -68,7 +71,6 @@ function SetPassword() {
              IsVerified : res.isVerified
         }
         ))
-        .then(console.log(user.FirstName))
         .catch(error => console.log(error))
     } , []) 
 
@@ -100,12 +102,13 @@ function SetPassword() {
              OTP : user.OTP,
              IsVerified : user.IsVerified
             }
-            setUser({Password : state.newPassword})
-            console.log(user.Password)
+            setUser({Password : state.newPassword});
             axios.put(Config.api + `Users/${user.UserId}`, userWithPassword)
-            .then(res=> alert('Password changed Successfully '+ res))
+            .then(res=> { alert('Password changed Successfully!') 
+                sessionStorage.clear();
+                window.location.href='/';
+        })
             .catch(error => alert("Oops! Something went wrong." + error))
-            sessionStorage.clear()
             window.location.reload()
     }
     else {

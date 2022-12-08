@@ -4,6 +4,7 @@ import hide from "../../images/hide.png"
 import "./Password.css"
 import Config from "../Settings/Config"
 import axios from 'axios';
+import Auth401 from "../../images/computer.png"
 
 function Password() {
     const [oldPasswordShown, setoldPasswordShown] = useState(false);
@@ -73,7 +74,6 @@ function Password() {
              IsVerified : res.isVerified
         }
         ))
-        .then(console.log(user.FirstName))
         .catch(error => console.log(error))
     } , []) 
 
@@ -108,14 +108,16 @@ function Password() {
                  IsVerified : user.IsVerified
                 }
                 setUser({Password : state.newPassword})
-                console.log(user.Password)
                 if(state.newPassword != user.Password)
                 {
                     axios.put(Config.api + `Users/${user.UserId}`, userWithPassword)
-                    .then(res=> alert('Password changed Successfully '+ res))
-                    .catch(error => alert("Oops! Something went wrong." + error))
+                    .then(res=> { 
+                    alert('Password changed Successfully!')
                     sessionStorage.clear()
                     window.location.reload()
+                    window.location.href="/";
+                })
+                    .catch(error => alert("Oops! Something went wrong." + error))
                 }
                 else{
                     e.preventDefault();
@@ -134,6 +136,8 @@ function Password() {
         }
     }
   return (
+    <>
+    {Config.isUserLoggedin ? 
     <div className="card pass-card mx-auto">
     <form className='login-form'>
         <div className='login-body'>
@@ -171,7 +175,12 @@ function Password() {
         </center>
         </div>
     </form>
-    </div>
+    </div>: <> 
+    <center className='mt-5 mb-5 p-5'>
+        <img src={Auth401} alt="401 - Unauthorised to view page"/>
+        <h3 className='mt-5 mb-5 p-5'>Please log in to access this page!</h3>
+    </center>
+    </>} </>
   )
 }
 

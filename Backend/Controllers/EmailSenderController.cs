@@ -40,7 +40,7 @@ namespace Backend.Controllers
         #endregion
 
         #region Send OTP for Verifying First-Time Users
-        [HttpPost, Route("/VerifyUser")]
+        [HttpPost, Route("/api/VerifyUser")]
         public async Task<IActionResult> SendOTP(int id)
         {
             string Subject = "OTP for Email Verification";

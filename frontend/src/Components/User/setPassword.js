@@ -106,7 +106,7 @@ function SetPassword() {
             axios.put(Config.api + `Users/${user.UserId}`, userWithPassword)
             .then(res=> { alert('Password changed Successfully!') 
                 sessionStorage.clear();
-                window.location.href='/';
+                window.location.href="/";
         })
             .catch(error => alert("Oops! Something went wrong." + error))
             window.location.reload()

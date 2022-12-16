@@ -4,19 +4,21 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace backend.Migrations
 {
     [DbContext(typeof(CGDbContext))]
-    partial class CGDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221216132331_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("ProductVersion", "3.1.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Backend.Models.User", b =>
@@ -68,8 +70,8 @@ namespace backend.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<string>("PersonalMail")
                         .IsRequired()
@@ -103,11 +105,11 @@ namespace backend.Migrations
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("FileData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<int>("FileSize")
                         .HasColumnType("int");
-
-                    b.Property<string>("Filepath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
@@ -220,10 +222,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Tasks");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.TaskComments", b =>
@@ -239,10 +237,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Tasks");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.Tasks", b =>
@@ -258,20 +252,6 @@ namespace backend.Migrations
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Documents");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Backend.Models.User", b =>
-                {
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("backend.Models.Tasks", b =>
-                {
-                    b.Navigation("TaskComments");
                 });
 #pragma warning restore 612, 618
         }

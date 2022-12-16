@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(CGDbContext))]
-    [Migration("20221215065609_three")]
-    partial class three
+    [Migration("20221216141317_initial2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Backend.Models.User", b =>
@@ -70,8 +70,8 @@ namespace backend.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("PersonalMail")
                         .IsRequired()
@@ -105,11 +105,11 @@ namespace backend.Migrations
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("FileData")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int>("FileSize")
                         .HasColumnType("int");
+
+                    b.Property<string>("Filepath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
@@ -129,10 +129,8 @@ namespace backend.Migrations
                     b.Property<int>("TaskId")
                         .HasColumnType("int");
 
-
                     b.Property<int>("UserId")
-                    .HasColumnType("int");            
-                    //.OnDelete(DeleteBehavior.NoAction);
+                        .HasColumnType("int");
 
                     b.HasKey("TaskAssignedId");
 
@@ -224,6 +222,10 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tasks");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.TaskComments", b =>
@@ -239,6 +241,10 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tasks");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.Tasks", b =>
@@ -254,6 +260,20 @@ namespace backend.Migrations
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Backend.Models.User", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("backend.Models.Tasks", b =>
+                {
+                    b.Navigation("TaskComments");
                 });
 #pragma warning restore 612, 618
         }

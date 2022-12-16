@@ -12,48 +12,48 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaskAssignedController : ControllerBase
+    public class TaskAssignedsController : ControllerBase
     {
         private readonly CGDbContext _context;
 
-        public TaskAssignedController(CGDbContext context)
+        public TaskAssignedsController(CGDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TaskAssigned
+        // GET: api/TaskAssigneds
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskAssigned>>> GetTaskAssigned()
         {
             return await _context.TaskAssigned.ToListAsync();
         }
 
-        // GET: api/TaskAssigned/id
+        // GET: api/TaskAssigneds/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskAssigned>> GetTasAssigned(int id)
+        public async Task<ActionResult<TaskAssigned>> GetTaskAssigned(int id)
         {
-            var tasAssigned = await _context.TaskAssigned.FindAsync(id);
+            var taskAssigned = await _context.TaskAssigned.FindAsync(id);
 
-            if (tasAssigned == null)
+            if (taskAssigned == null)
             {
                 return NotFound();
             }
 
-            return tasAssigned;
+            return taskAssigned;
         }
 
-        // PUT: api/TasAssigneds/5
+        // PUT: api/TaskAssigneds/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTasAssigned(int id, TaskAssigned tasAssigned)
+        public async Task<IActionResult> PutTaskAssigned(int id, TaskAssigned taskAssigned)
         {
-            if (id != tasAssigned.TaskId)
+            if (id != taskAssigned.TaskAssignedId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(tasAssigned).State = EntityState.Modified;
+            _context.Entry(taskAssigned).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TasAssignedExists(id))
+                if (!TaskAssignedExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        // POST: api/TasAssigneds
+        // POST: api/TaskAssigneds
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<TaskAssigned>> PostTasAssigned(TaskAssigned tasAssigned)
+        public async Task<ActionResult<TaskAssigned>> PostTaskAssigned(TaskAssigned taskAssigned)
         {
-            _context.TaskAssigned.Add(tasAssigned);
+            _context.TaskAssigned.Add(taskAssigned);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTasAssigned", new { id = tasAssigned.TaskId }, tasAssigned);
+            return CreatedAtAction("GetTaskAssigned", new { id = taskAssigned.TaskAssignedId }, taskAssigned);
         }
 
-        // DELETE: api/TasAssigneds/5
+        // DELETE: api/TaskAssigneds/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TaskAssigned>> DeleteTasAssigned(int id)
+        public async Task<ActionResult<TaskAssigned>> DeleteTaskAssigned(int id)
         {
-            var tasAssigned = await _context.TaskAssigned.FindAsync(id);
-            if (tasAssigned == null)
+            var taskAssigned = await _context.TaskAssigned.FindAsync(id);
+            if (taskAssigned == null)
             {
                 return NotFound();
             }
 
-            _context.TaskAssigned.Remove(tasAssigned);
+            _context.TaskAssigned.Remove(taskAssigned);
             await _context.SaveChangesAsync();
 
-            return tasAssigned;
+            return taskAssigned;
         }
 
-        private bool TasAssignedExists(int id)
+        private bool TaskAssignedExists(int id)
         {
-            return _context.TaskAssigned.Any(e => e.TaskId == id);
+            return _context.TaskAssigned.Any(e => e.TaskAssignedId == id);
         }
     }
 }

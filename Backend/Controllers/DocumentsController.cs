@@ -131,6 +131,14 @@ namespace backend.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
+                Documents d = new Documents {
+                    DocumentName= fileName,
+                    Extension= extension,
+                    UploadDate= DateTime.Now,
+                    DocumentType="task",
+                    Filepath= pathBuilt
+                };
+                PostDocuments(d);
             }
             catch (Exception e)
             {

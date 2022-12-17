@@ -1,0 +1,40 @@
+.doc-card
+{
+    margin-top: 6%;
+    font-family: 'Ubuntu';
+    height: 28rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.doc-heading
+{
+    /* margin-top: 2%; */
+    text-align: center;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    margin-bottom: 8%;
+}
+
+.doc-body
+{
+    padding:7% 15%;
+}
+
+.doc-text
+{
+    margin-top: 3%;
+    font-size: 18px;
+}
+
+.doc-btn
+{
+    width: 25%;
+    /* margin-bottom: 8%; */
+    background-color: rgb(0, 112, 173);
+    color:#fff;
+    border:0;
+    padding:7px;
+    border-radius: 7px;
+    font-size: large;
+    transition-duration: 0.4s;
+}

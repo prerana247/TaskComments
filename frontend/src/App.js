@@ -7,6 +7,7 @@ import Password from './Components/User/Password';
 import SetPassword from './Components/User/setPassword';
 import VerifyOtp from './Components/Login/VerifyOtp';
 import Dashboard from './Components/Dashboard/Dashboard';
+import AddDocument from './Components/Task/AddDocument';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/setPassword' element={<SetPassword />} />
           <Route path='/otp' element={<VerifyOtp/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/adddoc' element={<AddDocument/>}/>
         </Routes> 
        </BrowserRouter>
        <Footer/>

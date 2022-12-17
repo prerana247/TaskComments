@@ -113,13 +113,13 @@ namespace backend.Controllers
         }
 
 
-        private async Task<string> WriteFile(IFormFile file, string f_name)
+        private async Task<string> WriteFile(IFormFile file/*, string f_name*/)
         {
-            string fileName = f_name;
+            string fileName = file.FileName;
             try
             {
                 var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-                fileName = fileName + extension;
+                
                 var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
                 if (!Directory.Exists(pathBuilt))
                 {
@@ -132,7 +132,7 @@ namespace backend.Controllers
                     await file.CopyToAsync(stream);
                 }
                 Documents d = new Documents {
-                    DocumentName= fileName,
+                    DocumentName= file.FileName,
                     Extension= extension,
                     UploadDate= DateTime.Now,
                     DocumentType="task",
@@ -152,10 +152,10 @@ namespace backend.Controllers
         [Route("SaveFile")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadFile(IFormFile file, string f_name, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadFile(IFormFile file/*, string f_name*//*, CancellationToken cancellationToken*/)
         {
 
-            var result = await WriteFile(file, f_name);
+            var result = await WriteFile(file);
 
 
             return Ok(result);
@@ -177,6 +177,21 @@ namespace backend.Controllers
             return File(bytes, contentType, Path.GetFileName(filePath));
         }
 
+        [HttpGet("DownloadallFile")]
+        public async Task<ActionResult> DownloadallFile()
+        {
+            // ... code for validation and get the file
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files"/*,*/
+                  /* NameFile*/);
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(filePath, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+
+            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            return File(bytes, contentType, Path.GetFileName(filePath));
+        }
     }
 }
     

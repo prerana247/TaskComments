@@ -22,6 +22,7 @@ function App() {
           <Route path='/otp' element={<VerifyOtp/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/adddoc' element={<AddDocument/>}/>
+          
         </Routes> 
        </BrowserRouter>
        <Footer/>

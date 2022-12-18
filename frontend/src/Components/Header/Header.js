@@ -34,6 +34,12 @@ function Header() {
           <li className="nav-item">
             <a className="nav-link" href="/changepass">Change password</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/adddoc">Add Document</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/taskdetails">Task Details</a>
+          </li>
           
         </ul>
             <div>

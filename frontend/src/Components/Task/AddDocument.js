@@ -1,8 +1,6 @@
 import React from 'react'
-import "./AddDocument.css"
 import cglogo from '../../images/cg-logo.png'
-import { useState }from 'react'
-import { useRef } from 'react'
+import { useState, useRef}from 'react'
 import axios from 'axios'
 import Config from '../Settings/Config'
 function AddDocument() {

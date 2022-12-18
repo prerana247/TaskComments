@@ -8,6 +8,7 @@ import SetPassword from './Components/User/setPassword';
 import VerifyOtp from './Components/Login/VerifyOtp';
 import Dashboard from './Components/Dashboard/Dashboard';
 import AddDocument from './Components/Task/AddDocument';
+import TaskDetails from './Components/Task/TaskDetails';
 
 function App() {
   return (
@@ -21,7 +22,12 @@ function App() {
           <Route path='/setPassword' element={<SetPassword />} />
           <Route path='/otp' element={<VerifyOtp/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
+          
+
+          {/* Task Module */}
           <Route path='/adddoc' element={<AddDocument/>}/>
+          <Route path='/taskdetails' element={<TaskDetails/>}/>
+
           
         </Routes> 
        </BrowserRouter>

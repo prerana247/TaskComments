@@ -12,9 +12,10 @@ function AddDocument() {
 
       const formData = new FormData();
       formData.append("file", file);
+      sessionStorage.setItem("filename",file.name);
      axios.post(Config.api+"Documents/SaveFile",formData,{headers:{ 'Content-Type': 'multipart/form-data'}})
      .then(response => {alert(response.data+" "+"uploaded")
-                           window.location.reload()})
+                           window.location.href="/taskdetails"})
         .catch(error => alert(error));
        
   }

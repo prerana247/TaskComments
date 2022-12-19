@@ -115,12 +115,21 @@ namespace backend.Controllers
 
         private async Task<string> WriteFile(IFormFile file/*, string f_name*/)
         {
-            string fileName = file.FileName;
+            string fileName =file.FileName;
             try
             {
                 var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
                 
                 var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
+                Documents d = new Documents
+                {
+                    DocumentName = file.FileName,
+                    Extension = extension,
+                    UploadDate = DateTime.Now,
+                    DocumentType = "task",
+                    Filepath = pathBuilt
+                };
+                PostDocuments(d);
                 if (!Directory.Exists(pathBuilt))
                 {
                     Directory.CreateDirectory(pathBuilt);
@@ -131,14 +140,6 @@ namespace backend.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-                Documents d = new Documents {
-                    DocumentName= file.FileName,
-                    Extension= extension,
-                    UploadDate= DateTime.Now,
-                    DocumentType="task",
-                    Filepath= pathBuilt
-                };
-                PostDocuments(d);
             }
             catch (Exception e)
             {
@@ -177,21 +178,6 @@ namespace backend.Controllers
             return File(bytes, contentType, Path.GetFileName(filePath));
         }
 
-        [HttpGet("DownloadallFile")]
-        public async Task<ActionResult> DownloadallFile()
-        {
-            // ... code for validation and get the file
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files"/*,*/
-                  /* NameFile*/);
-            var provider = new FileExtensionContentTypeProvider();
-            if (!provider.TryGetContentType(filePath, out var contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-
-            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-            return File(bytes, contentType, Path.GetFileName(filePath));
-        }
     }
 }
     

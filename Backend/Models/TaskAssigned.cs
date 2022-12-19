@@ -12,7 +12,7 @@ namespace backend.Models
         public int UserId { get; set; }
         [ForeignKey("Tasks")]
         public int TaskId { get; set; }
-
+        public int Scores { get; set; }
         public virtual User User { get; set; }
 
         public virtual Tasks Tasks { get; set; }

@@ -25,7 +25,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tasks>>> GetTasks()
         {
-            return await _context.Tasks.ToListAsync();
+            return await _context.Tasks.Include(i=>i.Documents).ToListAsync();
         }
 
         // GET: api/Tasks/5
@@ -80,7 +80,16 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Tasks>> PostTasks(Tasks tasks)
         {
-            _context.Tasks.Add(tasks);
+            Tasks tasks1 = new Tasks {
+                TaskName=tasks.TaskName,
+                CreatedAt=DateTime.Now,
+                Deadline=tasks.Deadline,
+                CreatedBy=tasks.CreatedBy,  
+                Description=tasks.Description,  
+                TaskStatus=tasks.TaskStatus,
+                DocumentId=tasks.DocumentId,
+            };
+            _context.Tasks.Add(tasks1);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTasks", new { id = tasks.TaskId }, tasks);

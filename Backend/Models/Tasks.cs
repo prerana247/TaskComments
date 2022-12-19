@@ -23,7 +23,6 @@ namespace backend.Models
         public int CreatedBy { get; set; }
         public string Description { get; set; }
         public bool TaskStatus { get; set; }
-        public int Scores { get; set; }
         [ForeignKey("Documents")]
         public int DocumentId { get; set; }
 

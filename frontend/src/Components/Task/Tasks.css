@@ -1,0 +1,26 @@
+.guest-container{
+    padding:1%;
+}
+
+.label-heading{
+    font-family: "Montserrat";
+    font-weight: 700;
+    text-align:center;
+    color: black;
+    display: inline-block;
+}
+
+.add-guest{
+    margin-top: 18px;
+    margin-bottom: 12px;
+}
+
+.g-para-text{
+    padding-top: 1%;
+    font-size: 16.2px;
+}
+
+.label-text{
+    color:#fff;
+    margin-bottom: 5px;
+}

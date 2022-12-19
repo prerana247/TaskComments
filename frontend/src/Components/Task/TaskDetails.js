@@ -5,17 +5,17 @@ import Config from '../Settings/Config';
 
 
 function TaskDetails() {
-    const[documents,setdocuments]=useState([]);
-    const[taskname,settaskname]=useState('');
-    const[description,setdescription]=useState('');
-    const[deadline,setdeadline]=useState();
-    const[documentId,setdocumentId]=useState(0);
-    
-    useEffect(()=>{
-        axios.get(Config.api+'Documents')
-        .then(res=>setdocuments(res.data))
-        .catch(err=>alert(err))
-    }    
+    const [documents, setdocuments] = useState([]);
+    const [taskname, settaskname] = useState('');
+    const [description, setdescription] = useState('');
+    const [deadline, setdeadline] = useState();
+    const [documentId, setdocumentId] = useState(0);
+
+    useEffect(() => {
+        axios.get(Config.api + 'Documents')
+            .then(res => setdocuments(res.data))
+            .catch(err => alert(err))
+    }
     )
     const disableDates = () => {
         var today, dd, mm, yyyy;
@@ -31,20 +31,20 @@ function TaskDetails() {
         yyyy = today.getUTCFullYear();
         return yyyy + "-" + mm + "-" + dd;
     }
-    const handlesubmit = ()=>{
-       
-        const payload={
-            TaskName:taskname,
-            Deadline:deadline,
-            CreatedBy:parseInt(sessionStorage.getItem('Id')),
-            Description:description,
-            TaskStatus:false,
-            DocumentId:parseInt(documentId)
+    const handlesubmit = () => {
+
+        const payload = {
+            TaskName: taskname,
+            Deadline: deadline,
+            CreatedBy: parseInt(sessionStorage.getItem('Id')),
+            Description: description,
+            TaskStatus: false,
+            DocumentId: parseInt(documentId)
         }
 
-        axios.post(Config.api+'Tasks',payload)
-        .then(res=>alert(res+"success"))
-        .catch(err=>alert(err))
+        axios.post(Config.api + 'Tasks', payload)
+            .then(res => alert(res + "success"))
+            .catch(err => alert(err))
     }
 
     return (
@@ -56,29 +56,31 @@ function TaskDetails() {
                     </h3>
                     <div className="mb-3">
                         <label className="form-label login-label">Task Name : </label>
-                        <input type="text" className="form-control" id="TaskName" 
-                             placeholder='Enter Task Name' onChange={e=>{settaskname(e.target.value)}} />
+                        <input type="text" className="form-control" id="TaskName"
+                            placeholder='Enter Task Name' onChange={e => { settaskname(e.target.value) }} />
                     </div>
                     <div className="mb-3">
                         <div className="mb-3">
                             <label className="form-label login-label">Description : </label>
-                            <input type="text" className="form-control" id="description"
-                                onChange={e=>{setdescription(e.target.value)}} placeholder='Enter Description' />
+                            {/* <input type="text" className="form-control" id="description"
+                                onChange={e => { setdescription(e.target.value) }} placeholder='Enter Description' /> */}
+                            <textarea name="comment" type="text"
+                                rows="5" cols="70" id="description" onChange={e => { setdescription(e.target.value) }} className='form-control' placeholder='Enter Description'>
+                            </textarea>
                         </div>
                         <div className="mb-3">
                             <label className="form-label login-label">Deadline : </label>
                             <input type="date" className="form-control" id="deadline" min={disableDates()}
-                                onChange={e=>{setdeadline(e.target.value)}} placeholder='Enter Deadline' />
+                                onChange={e => { setdeadline(e.target.value) }} placeholder='Enter Deadline' />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label login-label">Document : </label>
-                            <select className="form-select" value={documentId} onChange={e=>{setdocumentId(e.target.value)}}>
-                        <option value="null">Select Document </option>
-                            {(sessionStorage.getItem('filename')==null ? documents :documents.filter(r=>r.documentName==sessionStorage.getItem('filename'))).map(s=>
-                        <option key={s.documentId} value={s.documentId}>{s.documentName}</option>
-                         )}
-                    </select>
-                        </div>
+                <label className="form-label login-label">Upload File</label>
+                <div className='d-flex flex-row'>
+                <input type="file" className="form-control"  /*ref={fileInput}*/
+                 placeholder='Choose File' /* onChange={handleFileChange}*/  />
+                 </div>
+            </div>
+
                     </div>
                     <center>
                         <button type="submit" className="login-btn mt-3">Submit</button>

@@ -23,11 +23,11 @@ namespace backend.Models
         public int CreatedBy { get; set; }
         public string Description { get; set; }
         public bool TaskStatus { get; set; }
-        [ForeignKey("Documents")]
-        public int DocumentId { get; set; }
+
+        public string DocumentName { get; set; }
 
         public virtual User User { get; set; }
-        public virtual Documents Documents { get; set; }
+       
 
         public virtual ICollection<TaskComments> TaskComments { get; set; }
 

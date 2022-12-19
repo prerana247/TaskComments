@@ -1,22 +1,18 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect,useRef, useState } from 'react'
 import cglogo from '../../images/cg-logo.png'
 import Config from '../Settings/Config';
 
 
 function TaskDetails() {
-    const [documents, setdocuments] = useState([]);
     const [taskname, settaskname] = useState('');
     const [description, setdescription] = useState('');
     const [deadline, setdeadline] = useState();
     const [documentId, setdocumentId] = useState(0);
-
-    useEffect(() => {
-        axios.get(Config.api + 'Documents')
-            .then(res => setdocuments(res.data))
-            .catch(err => alert(err))
-    }
-    )
+    const fileInput = useRef(null);
+    const [file, setFile] = useState(null);
+  
+    
     const disableDates = () => {
         var today, dd, mm, yyyy;
         today = new Date();
@@ -39,12 +35,23 @@ function TaskDetails() {
             CreatedBy: parseInt(sessionStorage.getItem('Id')),
             Description: description,
             TaskStatus: false,
-            DocumentId: parseInt(documentId)
+            DocumentName: file.name
         }
+        const formData = new FormData();
+        formData.append("file", file);
 
         axios.post(Config.api + 'Tasks', payload)
-            .then(res => alert(res + "success"))
+            .then(res => {
+            axios.post(Config.api+"Tasks/SaveFile",formData,{headers:{ 'Content-Type': 'multipart/form-data'}})
+            .then(response =>alert("task successfully created"))
+               .catch(error => alert(error));})
             .catch(err => alert(err))
+
+            
+           
+    }
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
     }
 
     return (
@@ -62,8 +69,6 @@ function TaskDetails() {
                     <div className="mb-3">
                         <div className="mb-3">
                             <label className="form-label login-label">Description : </label>
-                            {/* <input type="text" className="form-control" id="description"
-                                onChange={e => { setdescription(e.target.value) }} placeholder='Enter Description' /> */}
                             <textarea name="comment" type="text"
                                 rows="5" cols="70" id="description" onChange={e => { setdescription(e.target.value) }} className='form-control' placeholder='Enter Description'>
                             </textarea>
@@ -76,8 +81,8 @@ function TaskDetails() {
                         <div className="mb-3">
                 <label className="form-label login-label">Upload File</label>
                 <div className='d-flex flex-row'>
-                <input type="file" className="form-control"  /*ref={fileInput}*/
-                 placeholder='Choose File' /* onChange={handleFileChange}*/  />
+                <input type="file" className="form-control"  ref={fileInput}
+                 placeholder='Choose File'  onChange={handleFileChange}  />
                  </div>
             </div>
 

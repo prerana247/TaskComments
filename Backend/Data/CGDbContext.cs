@@ -18,7 +18,6 @@ namespace Backend.Data
 
         public DbSet<TaskAssigned> TaskAssigned { get; set; }
 
-        public DbSet<Documents> Documents { get; set; }
 
         public DbSet<TaskComments> TaskComments { get; set; }
 

@@ -84,33 +84,6 @@ namespace backend.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("backend.Models.Documents", b =>
-                {
-                    b.Property<int>("DocumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DocumentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Extension")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Filepath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("DocumentId");
-
-                    b.ToTable("Documents");
-                });
-
             modelBuilder.Entity("backend.Models.TaskAssigned", b =>
                 {
                     b.Property<int>("TaskAssignedId")
@@ -183,8 +156,8 @@ namespace backend.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DocumentId")
-                        .HasColumnType("int");
+                    b.Property<string>("DocumentName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskName")
                         .HasColumnType("nvarchar(max)");
@@ -195,8 +168,6 @@ namespace backend.Migrations
                     b.HasKey("TaskId");
 
                     b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DocumentId");
 
                     b.ToTable("Tasks");
                 });
@@ -246,14 +217,6 @@ namespace backend.Migrations
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("backend.Models.Documents", "Documents")
-                        .WithMany()
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Documents");
 
                     b.Navigation("User");
                 });

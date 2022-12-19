@@ -7,7 +7,6 @@ import Password from './Components/User/Password';
 import SetPassword from './Components/User/setPassword';
 import VerifyOtp from './Components/Login/VerifyOtp';
 import Dashboard from './Components/Dashboard/Dashboard';
-import AddDocument from './Components/Task/AddDocument';
 import TaskDetails from './Components/Task/TaskDetails';
 import TaskList from './Components/Task/TaskList';
 
@@ -27,7 +26,7 @@ function App() {
           
 
           {/* Task Module */}
-          <Route path='/adddoc' element={<AddDocument/>}/>
+         
           <Route path='/taskdetails' element={<TaskDetails/>}/>
           <Route path='/tasklist' element={<TaskList/>}/>
 

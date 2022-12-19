@@ -35,7 +35,7 @@ function Header() {
             <a className="nav-link" href="/changepass">Change password</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/adddoc">Add Document</a>
+            <a className="nav-link" href="/taskdetails">Add Task</a>
           </li> 
         </ul>
             <div>

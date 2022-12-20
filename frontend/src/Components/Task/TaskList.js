@@ -70,6 +70,12 @@ function TaskList() {
                             &nbsp; Assign
                           </a>
                         </div>
+
+                        {/* <div className='tsked-btn'>
+                        <button className="btn Assigned-btn btn-primary" disabled>
+                          <i className="fa fa-check"></i>&nbsp; Assigned
+                        </button>
+                        </div> */}
                       
                     </div>
                   </article>

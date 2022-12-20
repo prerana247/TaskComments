@@ -11,6 +11,7 @@ import TaskDetails from './Components/Task/TaskDetails';
 import TaskList from './Components/Task/TaskList';
 
 
+
 function App() {
   return (
     <div className="App">
@@ -29,6 +30,7 @@ function App() {
          
           <Route path='/taskdetails' element={<TaskDetails/>}/>
           <Route path='/tasklist' element={<TaskList/>}/>
+
 
 
 
